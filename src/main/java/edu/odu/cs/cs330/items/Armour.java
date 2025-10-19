@@ -44,7 +44,11 @@ public class Armour extends Equippable {
         super(src.name);
 
         this.durability = src.durability;
-        // Copt the remaining fields (data members)
+        this.material = src.material;
+        this.modifier = src.modifier;
+        this.modifierLevel = src.modifierLevel;
+        this.element = src.element;
+        this.defense = src.defense;
     }
 
     /**
@@ -80,8 +84,12 @@ public class Armour extends Equippable {
     public void read(Scanner snr)
     {
         super.name = snr.next();
-
-        // Use snr.next() and snr.nextInt() to read in values remaining fields
+        super.material = snr.next();
+        super.durability = snr.nextInt();
+        this.defense = snr.nextInt();
+        super.modifier = snr.next();
+        super.modifierLevel = snr.nextInt();
+        super.element = snr.next();
 
     }
 
@@ -91,8 +99,18 @@ public class Armour extends Equippable {
     @Override
     public Item clone()
     {
-        // Replace the return
-        return new Armour();
+        Armour cpy = new Armour();
+
+        cpy.setName(this.name);
+
+        cpy.setDurability(this.getDurability());
+        cpy.setMaterial(this.getMaterial());
+        cpy.setModifier(this.getModifier());
+        cpy.setModifierLevel(this.getModifierLevel());
+        cpy.setElement(this.getElement());
+        cpy.setDefense(this.defense);
+
+        return cpy;
     }
 
     /**
@@ -110,8 +128,10 @@ public class Armour extends Equippable {
 
         Armour rhsItem = (Armour) rhs;
 
-        // Replace this return
-        return false;
+        return this.name.equals(rhsItem.name) &&
+            this.material.equals(rhsItem.material) &&
+            this.modifier.equals(rhsItem.modifier) &&
+            this.element.equals(rhsItem.element);
 
     }
 
@@ -122,8 +142,16 @@ public class Armour extends Equippable {
     @Override
     public int hashCode()
     {
-        // Replace this return
-        return -1;
+        // int hash = 17;
+
+        // hash = 31 * hash + (name != null ? name.hashCode() : 0);
+        // hash = 31 * hash + (material != null ? material.hashCode() : 0);
+        // hash = 31 * hash + (modifier != null ? modifier.hashCode() : 0);
+        // hash = 31 * hash + (element != null ? element.hashCode() : 0);
+        
+        // return hash;
+
+        return name.hashCode() + material.hashCode() + modifier.hashCode() + element.hashCode();
     }
 
     /**
@@ -134,9 +162,9 @@ public class Armour extends Equippable {
     {
         return String.join(
             System.lineSeparator(),
-            String.format("  Refer to..."),
-            String.format("  ...solution for the..."),
-            String.format("  ...previous assignment"),
+            String.format("  Nme: %s%n  Dur: %d%n  Def: %d%n  Mtl: %s%n  Mdr: %s (Lvl %d)%n  Emt: %s", 
+                super.getName(), super.getDurability(), this.getDefense(), super.getMaterial(), super.getModifier(), super.getModifierLevel(), 
+                super.getElement()),
             ""
         );
     }
